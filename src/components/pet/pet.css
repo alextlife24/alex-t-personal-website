@@ -1,0 +1,360 @@
+/* ============================================================
+   Website Pet — Alex T 的三花貓
+   移動與動畫全部交給 CSS，React 只負責決定目標位置與行為狀態。
+   ============================================================ */
+
+.pet-root {
+  --pet-size: 52px; /* mobile */
+  --pet-bottom: 1rem;
+
+  position: fixed;
+  bottom: var(--pet-bottom);
+  left: 0;
+  z-index: 35; /* 高於內文，低於 Header(40) 與 Mobile Menu(50) */
+  width: var(--pet-size);
+  /* 整層不吃滑鼠事件，只有貓咪本體可以被點 */
+  pointer-events: none;
+  will-change: transform;
+}
+
+@media (min-width: 768px) {
+  .pet-root {
+    --pet-size: 70px; /* tablet */
+    --pet-bottom: 1.25rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .pet-root {
+    --pet-size: 80px; /* desktop */
+    --pet-bottom: 1.5rem;
+  }
+}
+
+/* 泡泡與貓咪的共同容器（不會被翻轉） */
+.pet-stage {
+  position: relative;
+  width: var(--pet-size);
+}
+
+/* ------------------------------------------------------------
+   貓咪本體
+   ------------------------------------------------------------ */
+.pet-hitbox {
+  position: relative;
+  display: block;
+  width: var(--pet-size);
+  height: var(--pet-size);
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  pointer-events: auto;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform 320ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.pet-hitbox:hover {
+  transform: translateY(-2px) scale(1.04);
+}
+
+.pet-hitbox:focus-visible {
+  outline: 1px solid #765846;
+  outline-offset: 4px;
+}
+
+/* 翻轉與腳步動畫只作用在這一層，泡泡不受影響 */
+.pet-sprite {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-origin: 50% 100%;
+}
+
+.pet-sprite[data-facing='left'] {
+  transform: scaleX(-1);
+}
+
+.pet-sprite img {
+  object-fit: contain;
+  object-position: bottom center;
+}
+
+/* ------------------------------------------------------------
+   Idle：很輕微的呼吸
+   ------------------------------------------------------------ */
+@keyframes pet-breathe {
+  0%,
+  100% {
+    transform: scaleY(1) translateY(0);
+  }
+  50% {
+    transform: scaleY(1.015) translateY(-1px);
+  }
+}
+
+@keyframes pet-breathe-flipped {
+  0%,
+  100% {
+    transform: scaleX(-1) scaleY(1) translateY(0);
+  }
+  50% {
+    transform: scaleX(-1) scaleY(1.015) translateY(-1px);
+  }
+}
+
+.pet-sprite[data-state='idle'],
+.pet-sprite[data-state='curious'] {
+  animation: pet-breathe 3s ease-in-out infinite;
+}
+
+.pet-sprite[data-state='idle'][data-facing='left'],
+.pet-sprite[data-state='curious'][data-facing='left'] {
+  animation-name: pet-breathe-flipped;
+}
+
+/* curious 稍微抬頭張望 */
+.pet-sprite[data-state='curious'] {
+  animation-duration: 2.6s;
+}
+
+/* ------------------------------------------------------------
+   Walking：非常輕微的擺動模擬腳步
+   ------------------------------------------------------------ */
+@keyframes pet-step {
+  0%,
+  100% {
+    transform: rotate(-1deg) translateY(0);
+  }
+  50% {
+    transform: rotate(1deg) translateY(-2px);
+  }
+}
+
+@keyframes pet-step-flipped {
+  0%,
+  100% {
+    transform: scaleX(-1) rotate(1deg) translateY(0);
+  }
+  50% {
+    transform: scaleX(-1) rotate(-1deg) translateY(-2px);
+  }
+}
+
+.pet-sprite[data-state='walking'] {
+  animation: pet-step 620ms ease-in-out infinite;
+}
+
+.pet-sprite[data-state='walking'][data-facing='left'] {
+  animation-name: pet-step-flipped;
+}
+
+/* ------------------------------------------------------------
+   Sleeping
+   ------------------------------------------------------------ */
+.pet-sprite[data-state='sleeping'] {
+  transform: scale(0.96);
+  animation: pet-sleep 4s ease-in-out infinite;
+}
+
+.pet-sprite[data-state='sleeping'][data-facing='left'] {
+  transform: scaleX(-1) scale(0.96);
+  animation-name: pet-sleep-flipped;
+}
+
+@keyframes pet-sleep {
+  0%,
+  100% {
+    transform: scale(0.96) scaleY(1);
+  }
+  50% {
+    transform: scale(0.96) scaleY(1.02);
+  }
+}
+
+@keyframes pet-sleep-flipped {
+  0%,
+  100% {
+    transform: scaleX(-1) scale(0.96) scaleY(1);
+  }
+  50% {
+    transform: scaleX(-1) scale(0.96) scaleY(1.02);
+  }
+}
+
+/* Zzz */
+.pet-zzz {
+  position: absolute;
+  right: -2px;
+  bottom: calc(var(--pet-size) * 0.72);
+  display: flex;
+  align-items: flex-end;
+  gap: 1px;
+  font-family: var(--font-serif), Georgia, serif;
+  color: #765846;
+  line-height: 1;
+  pointer-events: none;
+  user-select: none;
+}
+
+.pet-zzz span {
+  opacity: 0;
+  animation: pet-zzz-fade 3.6s ease-in-out infinite;
+}
+
+.pet-zzz span:nth-child(1) {
+  font-size: calc(var(--pet-size) * 0.16);
+  animation-delay: 0s;
+}
+.pet-zzz span:nth-child(2) {
+  font-size: calc(var(--pet-size) * 0.2);
+  animation-delay: 0.5s;
+}
+.pet-zzz span:nth-child(3) {
+  font-size: calc(var(--pet-size) * 0.24);
+  animation-delay: 1s;
+}
+
+@keyframes pet-zzz-fade {
+  0% {
+    opacity: 0;
+    transform: translateY(2px);
+  }
+  25% {
+    opacity: 0.75;
+    transform: translateY(-2px);
+  }
+  55% {
+    opacity: 0;
+    transform: translateY(-7px);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-7px);
+  }
+}
+
+/* ------------------------------------------------------------
+   對話泡泡
+   ------------------------------------------------------------ */
+.pet-bubble {
+  position: absolute;
+  bottom: calc(var(--pet-size) + 8px);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  max-width: 62vw;
+  padding: 7px 10px;
+  border: 1px solid #d8cdbd;
+  background: #f4f1ea;
+  color: #24231f;
+  font-family: var(--font-sans), system-ui, sans-serif;
+  font-size: 12px;
+  line-height: 1.4;
+  white-space: nowrap;
+  box-shadow: 0 2px 8px rgb(36 35 31 / 0.08);
+  pointer-events: auto;
+  animation: pet-bubble-in 260ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* 靠近畫面邊緣時改變對齊，避免超出螢幕 */
+.pet-bubble[data-align='center'] {
+  left: 50%;
+  transform: translateX(-50%);
+}
+.pet-bubble[data-align='left'] {
+  left: 0;
+}
+.pet-bubble[data-align='right'] {
+  right: 0;
+}
+
+@keyframes pet-bubble-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+}
+
+.pet-bubble[data-align='center'] {
+  animation-name: pet-bubble-in-center;
+}
+
+@keyframes pet-bubble-in-center {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+.pet-bubble-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.pet-bubble-hide {
+  flex-shrink: 0;
+  padding: 0 2px;
+  border: 0;
+  background: none;
+  color: rgb(36 35 31 / 0.35);
+  font-size: 12px;
+  line-height: 1;
+  cursor: pointer;
+  transition: color 240ms ease;
+}
+
+.pet-bubble-hide:hover {
+  color: #765846;
+}
+
+/* ------------------------------------------------------------
+   圖片還沒放進 public/pet/ 時的 Placeholder
+   ------------------------------------------------------------ */
+.pet-placeholder {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  border: 1px dashed #d8cdbd;
+  background: #e8e2d8;
+  color: rgb(36 35 31 / 0.4);
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: calc(var(--pet-size) * 0.18);
+  letter-spacing: 0.08em;
+}
+
+/* ------------------------------------------------------------
+   Reduce Motion：不左右走動，只留最低限度的存在感
+   ------------------------------------------------------------ */
+@media (prefers-reduced-motion: reduce) {
+  .pet-root {
+    transition: none !important;
+  }
+
+  .pet-sprite,
+  .pet-sprite[data-state='idle'],
+  .pet-sprite[data-state='walking'],
+  .pet-sprite[data-state='curious'],
+  .pet-sprite[data-state='sleeping'] {
+    animation: none !important;
+  }
+
+  .pet-zzz span {
+    animation: none !important;
+    opacity: 0.6;
+  }
+
+  .pet-hitbox:hover {
+    transform: none;
+  }
+
+  .pet-bubble {
+    animation: none !important;
+  }
+}

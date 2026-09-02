@@ -1,3 +1,4 @@
+import BringPetBack from '@/components/pet/BringPetBack';
 import type { SiteContent } from '@/lib/types/content';
 
 type FooterProps = {
@@ -21,6 +22,7 @@ export default function Footer({ site }: FooterProps) {
             <br />
             {site.footerNote}
           </p>
+          <BringPetBack />
         </div>
 
         <a

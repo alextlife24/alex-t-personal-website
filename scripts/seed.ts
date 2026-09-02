@@ -96,7 +96,7 @@ async function main() {
 
   await seedSingleton('site_settings', {
     site_name: site.name,
-    site_title: site.tagline,
+    site_title: site.titleSuffix,
     description: site.subtitle,
     seo_description: site.description,
     website_url: site.url,

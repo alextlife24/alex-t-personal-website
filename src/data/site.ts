@@ -9,6 +9,7 @@ export const site: SiteContent = {
   tagline: 'Coffee. Places. Ideas.',
   subtitle: 'A personal journal by Alex T.',
   title: 'Alex T — Coffee, Places & Ideas',
+  titleSuffix: 'Coffee, Places & Ideas',
   description:
     'A personal journal by Alex T exploring coffee, photography, Hualien, technology and everyday life.',
   keywords: [

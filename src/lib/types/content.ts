@@ -12,9 +12,13 @@ export type SectionLabelContent = {
 
 export type SiteContent = {
   name: string;
+  /** Footer 的品牌標語，維持靜態，不在後台管理範圍 */
   tagline: string;
   subtitle: string;
+  /** 完整瀏覽器標題 */
   title: string;
+  /** 標題後綴，對應後台 Site Settings 的 Site Title */
+  titleSuffix: string;
   description: string;
   keywords: string[];
   locale: string;

@@ -63,8 +63,9 @@ export async function getSiteSettings(): Promise<SiteContent> {
   return {
     ...siteFallback,
     name: data.site_name || siteFallback.name,
-    tagline: data.site_title || siteFallback.tagline,
-    title: `${data.site_name} — ${data.site_title}`,
+    // tagline 是 Footer 的品牌標語，維持靜態，不隨 site_title 改變
+    titleSuffix: data.site_title || siteFallback.titleSuffix,
+    title: `${data.site_name || siteFallback.name} — ${data.site_title || siteFallback.titleSuffix}`,
     description: data.seo_description || siteFallback.description,
     url: data.website_url || siteFallback.url,
     copyright: data.footer_text || siteFallback.copyright,

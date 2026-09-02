@@ -65,6 +65,9 @@
 
 /* 翻轉與腳步動畫只作用在這一層，泡泡不受影響 */
 .pet-sprite {
+  /* display: block 是必要的 —— transform 對非替換的行內元素無效，
+     少了這一行，翻轉與所有動畫都會被瀏覽器忽略 */
+  display: block;
   position: relative;
   width: 100%;
   height: 100%;
@@ -198,6 +201,8 @@
 }
 
 .pet-zzz span {
+  /* 同樣需要 inline-block，否則 keyframes 裡的 translateY 不會生效 */
+  display: inline-block;
   opacity: 0;
   animation: pet-zzz-fade 3.6s ease-in-out infinite;
 }

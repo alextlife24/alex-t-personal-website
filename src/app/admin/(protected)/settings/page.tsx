@@ -23,7 +23,7 @@ const defaults: SettingsForm = {
   description: 'A personal journal by Alex T.',
   seo_description:
     'A personal journal by Alex T exploring coffee, photography, Hualien, technology and everyday life.',
-  website_url: 'https://alext.example.com',
+  website_url: 'https://alex-t-personal-website.vercel.app',
   footer_text: '© 2026 Alex T.',
   location: 'Taiwan',
   og_image_url: null,
@@ -103,7 +103,7 @@ export default function AdminSettingsPage() {
                   type="url"
                   value={form.website_url}
                   onChange={(value) => update('website_url', value)}
-                  placeholder="https://your-domain.com"
+                  placeholder="https://alex-t-personal-website.vercel.app"
                 />
               </Field>
             </div>

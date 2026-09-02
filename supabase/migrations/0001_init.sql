@@ -27,7 +27,7 @@ create table if not exists public.site_settings (
   site_title text not null default 'Coffee, Places & Ideas',
   description text default 'A personal journal by Alex T.',
   seo_description text default 'A personal journal by Alex T exploring coffee, photography, Hualien, technology and everyday life.',
-  website_url text default 'https://alext.example.com',
+  website_url text default 'https://alex-t-personal-website.vercel.app',
   footer_text text default '© 2026 Alex T.',
   location text default 'Taiwan',
   og_image_url text,

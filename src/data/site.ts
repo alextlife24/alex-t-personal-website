@@ -22,7 +22,7 @@ export const site: SiteContent = {
     'Taiwan',
   ],
   locale: 'zh-Hant',
-  url: 'https://alext.example.com', // 上線後換成正式網域
+  url: 'https://alex-t-personal-website.vercel.app', // 正式網域（結尾不加斜線）
   email: 'toby0702889@gmail.com',
   footerNote: 'Personal Journal from Taiwan.',
   copyright: '© 2026 Alex T.',

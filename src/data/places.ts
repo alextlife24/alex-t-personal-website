@@ -1,16 +1,9 @@
 /** 04 — Places / Hualien 區塊內容。目前只做視覺卡片，不建立文章頁。 */
-export type PlaceItem = {
-  id: string;
-  title: string;
-  meta: string;
-  image: string | null;
-  imageAlt: string;
-  /** 之後要開放文章時，把 href 填上並將 comingSoon 改成 false。 */
-  href?: string;
-  comingSoon: boolean;
-};
+import type { PlacesContent } from '@/lib/types/content';
 
-export const places = {
+export type { PlaceItem } from '@/lib/types/content';
+
+export const places: PlacesContent = {
   label: { index: '03', title: 'PLACES' },
   heading: 'Hualien, through my eyes.',
   paragraphs: [
@@ -50,5 +43,5 @@ export const places = {
       imageAlt: '慶豐村的巷弄',
       comingSoon: true,
     },
-  ] satisfies PlaceItem[],
+  ],
 };

@@ -1,7 +1,11 @@
-import { site } from '@/data/site';
+import type { SiteContent } from '@/lib/types/content';
+
+type FooterProps = {
+  site: Pick<SiteContent, 'name' | 'tagline' | 'copyright' | 'footerNote'>;
+};
 
 /** Footer。不重複列出社群連結，只保留識別、版權與回到頂部。 */
-export default function Footer() {
+export default function Footer({ site }: FooterProps) {
   return (
     <footer className="border-t border-ink/10 bg-sand">
       <div className="shell flex flex-col gap-10 py-14 sm:py-16 md:flex-row md:items-end md:justify-between">

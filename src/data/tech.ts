@@ -1,12 +1,9 @@
 /** 06 — AI & Technology 區塊。 */
-export type TechCard = {
-  id: string;
-  title: string;
-  stack: string;
-  body: string;
-};
+import type { TechContent } from '@/lib/types/content';
 
-export const tech = {
+export type { TechCard } from '@/lib/types/content';
+
+export const tech: TechContent = {
   label: { index: '05', title: 'AI & TECH' },
   heading: 'Exploring what AI can become.',
   paragraphs: [
@@ -31,5 +28,5 @@ export const tech = {
       stack: 'Automation / Research / Creativity',
       body: '研究 AI 如何協助資料整理、研究與個人創作流程。',
     },
-  ] satisfies TechCard[],
+  ],
 };

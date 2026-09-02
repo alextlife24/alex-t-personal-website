@@ -1,9 +1,9 @@
 import SectionLabel from '@/components/ui/SectionLabel';
 import Reveal from '@/components/ui/Reveal';
-import { about } from '@/data/about';
+import type { AboutContent } from '@/lib/types/content';
 
 /** 01 / ABOUT。純文字區塊，不做技能百分比或 Progress Bar。 */
-export default function AboutSection() {
+export default function AboutSection({ about }: { about: AboutContent }) {
   return (
     <section id="about" className="section-space">
       <div className="shell">

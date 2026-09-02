@@ -1,14 +1,14 @@
 import Figure from '@/components/ui/Figure';
 import Reveal from '@/components/ui/Reveal';
 import SectionLabel from '@/components/ui/SectionLabel';
-import { coffee } from '@/data/coffee';
+import type { CoffeeContent } from '@/lib/types/content';
 
 /**
  * 02 / COFFEE。
  * 三張 Editorial Card 刻意不等大：
  * Card 01 直式大卡、Card 02 較小、Card 03 橫向通欄。
  */
-export default function CoffeeSection() {
+export default function CoffeeSection({ coffee }: { coffee: CoffeeContent }) {
   const [first, second, third] = coffee.cards;
 
   return (

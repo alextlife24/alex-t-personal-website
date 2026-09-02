@@ -1,14 +1,18 @@
 import Figure from '@/components/ui/Figure';
 import Reveal from '@/components/ui/Reveal';
 import SectionLabel from '@/components/ui/SectionLabel';
-import { photography } from '@/data/photography';
+import type { PhotographyContent } from '@/lib/types/content';
 
 /**
  * 04 / PHOTOGRAPHY。
  * 刻意不做 Instagram 九宮格：
  * 一張大型直圖 + 兩張小圖 + 一張橫圖，並保留大量留白。
  */
-export default function PhotographySection() {
+export default function PhotographySection({
+  photography,
+}: {
+  photography: PhotographyContent;
+}) {
   const [large, smallA, smallB, wide] = photography.photos;
 
   return (

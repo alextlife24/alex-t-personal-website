@@ -1,5 +1,5 @@
 import { ArrowUpRight, Github, Instagram, Mail, MapPin } from 'lucide-react';
-import type { SocialItem } from '@/data/social';
+import type { SocialItem } from '@/lib/types/content';
 
 /**
  * Lucide 沒有 TikTok / X / Threads 的官方品牌圖示，

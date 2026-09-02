@@ -1,14 +1,9 @@
 /** 05 — Photography 區塊。Editorial 版面：一張大直圖、兩張小圖、一張橫圖。 */
-export type Photo = {
-  id: string;
-  image: string | null;
-  alt: string;
-  /** Hover 時顯示的地點與年份 */
-  place: string;
-  year: string;
-};
+import type { PhotographyContent } from '@/lib/types/content';
 
-export const photography = {
+export type { Photo } from '@/lib/types/content';
+
+export const photography: PhotographyContent = {
   label: { index: '04', title: 'PHOTOGRAPHY' },
   headingLines: ['Imperfect cameras.', 'Real memories.'],
   paragraphs: [
@@ -46,5 +41,5 @@ export const photography = {
       place: 'Hualien',
       year: '2026',
     },
-  ] satisfies Photo[],
+  ],
 };

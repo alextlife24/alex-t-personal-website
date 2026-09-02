@@ -1,12 +1,16 @@
 import Reveal from '@/components/ui/Reveal';
 import SectionLabel from '@/components/ui/SectionLabel';
-import { projects } from '@/data/projects';
+import type { ProjectsContent } from '@/lib/types/content';
 
 /**
  * 06 / SELECTED PROJECTS。
  * 極簡 Row List：編號、標題、分類、年份、箭頭。Hover 時整列淡淡變色。
  */
-export default function ProjectsSection() {
+export default function ProjectsSection({
+  projects,
+}: {
+  projects: ProjectsContent;
+}) {
   return (
     <section id="projects" className="section-space bg-sand">
       <div className="shell">

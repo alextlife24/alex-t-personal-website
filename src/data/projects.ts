@@ -1,13 +1,9 @@
 /** 07 — Selected Projects。純 Row List，之後要加連結就補上 href。 */
-export type Project = {
-  id: string;
-  title: string;
-  category: string;
-  year: string;
-  href?: string;
-};
+import type { ProjectsContent } from '@/lib/types/content';
 
-export const projects = {
+export type { Project } from '@/lib/types/content';
+
+export const projects: ProjectsContent = {
   label: { index: '06', title: 'SELECTED PROJECTS' },
   heading: "Things I've been exploring.",
   items: [
@@ -17,5 +13,5 @@ export const projects = {
     { id: '04', title: 'Brewing Journey', category: 'Coffee', year: '2026' },
     { id: '05', title: 'Hermes Personal Agent', category: 'AI', year: '2026' },
     { id: '06', title: 'Personal Website', category: 'Digital / Creative', year: '2026' },
-  ] satisfies Project[],
+  ],
 };

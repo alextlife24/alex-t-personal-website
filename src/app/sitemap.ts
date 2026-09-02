@@ -1,7 +1,9 @@
 import type { MetadataRoute } from 'next';
-import { site } from '@/data/site';
+import { getSiteSettings } from '@/lib/content';
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const site = await getSiteSettings();
+
   return [
     {
       url: site.url,

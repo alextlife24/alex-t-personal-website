@@ -1,13 +1,19 @@
 import Reveal from '@/components/ui/Reveal';
 import SectionLabel from '@/components/ui/SectionLabel';
 import SocialLink from '@/components/ui/SocialLink';
-import { contact, socials } from '@/data/social';
+import type { ContactContent, SocialItem } from '@/lib/types/content';
 
 /**
  * 07 / CONNECT。頁面最底的聯絡區塊，Header 的 Say Hello 會捲動到這裡。
  * 社群清單只維護在 src/data/social.ts。
  */
-export default function ContactSection() {
+export default function ContactSection({
+  contact,
+  socials,
+}: {
+  contact: ContactContent;
+  socials: SocialItem[];
+}) {
   return (
     <section id="connect" className="section-space">
       <div className="shell">

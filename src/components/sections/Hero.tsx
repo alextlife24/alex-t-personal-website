@@ -1,12 +1,12 @@
 import Figure from '@/components/ui/Figure';
 import Reveal from '@/components/ui/Reveal';
-import { hero } from '@/data/hero';
+import type { HeroContent } from '@/lib/types/content';
 
 /**
  * 首頁第一屏。保持乾淨：左側文字、右側大型直式影像（4:5）。
  * 文字內容在 src/data/hero.ts。
  */
-export default function Hero() {
+export default function Hero({ hero }: { hero: HeroContent }) {
   return (
     <section id="top" className="relative pt-28 sm:pt-32 lg:pt-40">
       <div className="shell">

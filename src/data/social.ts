@@ -3,16 +3,11 @@
  * 只放這幾個平台，不要自行新增其他社群。
  * icon 只在 Lucide 有正確品牌圖示時才填；沒有的用文字＋箭頭呈現。
  */
-export type SocialItem = {
-  name: string;
-  handle: string;
-  href: string;
-  /** 對應 SocialLink 內的圖示表；未列出者只顯示文字＋箭頭 */
-  icon?: 'instagram' | 'github' | 'mail' | 'map';
-  external: boolean;
-};
+import type { ContactContent, SocialItem } from '@/lib/types/content';
 
-export const contact = {
+export type { SocialItem } from '@/lib/types/content';
+
+export const contact: ContactContent = {
   label: { index: '07', title: 'CONNECT' },
   heading: "Let's share something interesting.",
   lines: [

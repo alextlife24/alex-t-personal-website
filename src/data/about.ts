@@ -1,5 +1,7 @@
 /** 02 — About 區塊內容。 */
-export const about = {
+import type { AboutContent } from '@/lib/types/content';
+
+export const about: AboutContent = {
   label: { index: '01', title: 'ABOUT' },
   heading: 'A little about me.',
   paragraphs: [

@@ -1,7 +1,7 @@
 import Figure from '@/components/ui/Figure';
 import Reveal from '@/components/ui/Reveal';
 import SectionLabel from '@/components/ui/SectionLabel';
-import { places } from '@/data/places';
+import type { PlacesContent } from '@/lib/types/content';
 import { cn } from '@/lib/utils';
 
 /**
@@ -9,7 +9,7 @@ import { cn } from '@/lib/utils';
  * 四個 Journal Card，用交錯的上下位移做出雜誌感，不對稱。
  * 目前只做視覺卡片，Hover 顯示 View Story，但標示 Coming Soon。
  */
-export default function PlacesSection() {
+export default function PlacesSection({ places }: { places: PlacesContent }) {
   return (
     <section id="places" className="section-space">
       <div className="shell">

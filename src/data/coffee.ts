@@ -1,17 +1,9 @@
 /** 03 — Coffee 區塊內容與三張 Editorial Card。 */
-export type CoffeeCard = {
-  id: string;
-  kicker: string;
-  title: string;
-  body: string;
-  /** 卡片下方的細節列表（器材 / 風味 / 里程碑） */
-  items?: string[];
-  itemsLabel?: string;
-  image: string | null;
-  imageAlt: string;
-};
+import type { CoffeeContent } from '@/lib/types/content';
 
-export const coffee = {
+export type { CoffeeCard } from '@/lib/types/content';
+
+export const coffee: CoffeeContent = {
   label: { index: '02', title: 'COFFEE' },
   heading: 'Coffee is more than a drink.',
   lede: 'For me, brewing is a way of observing small changes.',
@@ -57,5 +49,5 @@ export const coffee = {
       image: null,
       imageAlt: '沖煮練習紀錄',
     },
-  ] satisfies CoffeeCard[],
+  ],
 };

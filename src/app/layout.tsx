@@ -1,8 +1,6 @@
 import type { Metadata, Viewport } from 'next';
 import { Cormorant_Garamond, Inter, Noto_Sans_TC } from 'next/font/google';
-import Header from '@/components/layout/Header';
-import Footer from '@/components/layout/Footer';
-import { site } from '@/data/site';
+import { getSiteSettings } from '@/lib/content';
 import './globals.css';
 
 /* 英文標題：Serif。要換字體只需改這裡與 tailwind.config.ts 的 fontFamily。 */
@@ -28,35 +26,42 @@ const tc = Noto_Sans_TC({
   display: 'swap',
 });
 
-export const metadata: Metadata = {
-  metadataBase: new URL(site.url),
-  title: {
-    default: site.title,
-    template: `%s — ${site.name}`,
-  },
-  description: site.description,
-  keywords: [...site.keywords],
-  authors: [{ name: site.name }],
-  creator: site.name,
-  alternates: { canonical: '/' },
-  openGraph: {
-    type: 'website',
-    locale: 'zh_TW',
-    url: site.url,
-    siteName: site.title,
-    title: site.title,
+/** SEO 內容同樣支援後台管理，未設定 Supabase 時使用 src/data/site.ts。 */
+export async function generateMetadata(): Promise<Metadata> {
+  const site = await getSiteSettings();
+
+  return {
+    metadataBase: new URL(site.url),
+    title: {
+      default: site.title,
+      template: `%s — ${site.name}`,
+    },
     description: site.description,
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: site.title,
-    description: site.description,
-  },
-  robots: {
-    index: true,
-    follow: true,
-  },
-};
+    keywords: [...site.keywords],
+    authors: [{ name: site.name }],
+    creator: site.name,
+    alternates: { canonical: '/' },
+    openGraph: {
+      type: 'website',
+      locale: 'zh_TW',
+      url: site.url,
+      siteName: site.title,
+      title: site.title,
+      description: site.description,
+      ...(site.ogImage ? { images: [{ url: site.ogImage }] } : {}),
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: site.title,
+      description: site.description,
+      ...(site.ogImage ? { images: [site.ogImage] } : {}),
+    },
+    robots: {
+      index: true,
+      follow: true,
+    },
+  };
+}
 
 export const viewport: Viewport = {
   themeColor: '#F4F1EA',
@@ -77,15 +82,7 @@ export default function RootLayout({
         <noscript>
           <style>{`[style*="opacity:0"],[style*="opacity: 0"]{opacity:1!important;transform:none!important}`}</style>
         </noscript>
-        <a
-          href="#main"
-          className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:bg-ink focus:px-4 focus:py-2 focus:text-paper"
-        >
-          跳到主要內容
-        </a>
-        <Header />
-        <main id="main">{children}</main>
-        <Footer />
+        {children}
       </body>
     </html>
   );

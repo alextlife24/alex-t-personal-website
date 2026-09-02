@@ -1,13 +1,13 @@
 import Reveal from '@/components/ui/Reveal';
 import SectionLabel from '@/components/ui/SectionLabel';
-import { tech } from '@/data/tech';
+import type { TechContent } from '@/lib/types/content';
 
 /**
  * 05 / AI & TECH。
  * 視覺比其他區塊略為現代（等寬字標籤、細框卡片），
  * 但仍維持全站的暖色 Editorial 調性，不使用科技藍。
  */
-export default function TechSection() {
+export default function TechSection({ tech }: { tech: TechContent }) {
   return (
     <section id="tech" className="section-space">
       <div className="shell">

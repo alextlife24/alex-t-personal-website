@@ -1,0 +1,17 @@
+# 統一換行為 LF，避免 Windows / macOS 協作時整檔顯示為變更
+* text=auto eol=lf
+
+# 二進位檔不要做換行轉換
+*.jpg   binary
+*.jpeg  binary
+*.png   binary
+*.gif   binary
+*.webp  binary
+*.avif  binary
+*.ico   binary
+*.woff  binary
+*.woff2 binary
+*.pdf   binary
+
+# GitHub 語言統計時忽略 lock file
+package-lock.json linguist-generated=true

@@ -1,0 +1,114 @@
+# ─────────────────────────────────────────────
+# 相依套件
+# ─────────────────────────────────────────────
+/node_modules
+/.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/releases
+!.yarn/plugins
+!.yarn/sdks
+!.yarn/versions
+
+# ─────────────────────────────────────────────
+# 建置產物 / 快取
+# ─────────────────────────────────────────────
+/.next/
+/out/
+/build
+/dist
+*.tsbuildinfo
+next-env.d.ts
+.turbo
+.swc/
+.cache/
+.eslintcache
+/coverage
+
+# ─────────────────────────────────────────────
+# 環境變數與機密資料（絕對不要上傳）
+# ─────────────────────────────────────────────
+.env
+.env.*
+!.env.example
+*.local
+
+# 金鑰、憑證、認證檔
+*.pem
+*.key
+*.crt
+*.cer
+*.p12
+*.pfx
+*.jks
+*.keystore
+*.asc
+*.gpg
+id_rsa
+id_rsa.*
+id_ed25519
+id_ed25519.*
+secrets.*
+credentials.*
+service-account*.json
+gha-creds-*.json
+.npmrc
+.yarnrc
+.netrc
+
+# ─────────────────────────────────────────────
+# 部署平台
+# ─────────────────────────────────────────────
+.vercel
+.netlify
+.firebase/
+.wrangler/
+
+# ─────────────────────────────────────────────
+# Log
+# ─────────────────────────────────────────────
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.pnpm-debug.log*
+logs/
+
+# ─────────────────────────────────────────────
+# 編輯器 / IDE
+# ─────────────────────────────────────────────
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.swp
+*.swo
+*.sublime-workspace
+*.sublime-project
+
+# 本機工具設定（launch.json 可共用，本機個人設定不上傳）
+.claude/settings.local.json
+.claude/*.local.json
+
+# ─────────────────────────────────────────────
+# 作業系統
+# ─────────────────────────────────────────────
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# ─────────────────────────────────────────────
+# 暫存
+# ─────────────────────────────────────────────
+tmp/
+temp/
+*.tmp
+*.bak
+*.orig

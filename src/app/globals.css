@@ -1,0 +1,62 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    /* Sticky header 高度，避免錨點被蓋住 */
+    scroll-padding-top: 5rem;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-paper text-ink font-sans antialiased;
+    /* 避免任何元件造成手機版橫向捲動 */
+    overflow-x: hidden;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    @apply bg-beige text-ink;
+  }
+
+  :focus-visible {
+    @apply outline-none ring-1 ring-coffee ring-offset-2 ring-offset-paper;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@layer components {
+  /* 版心：手機留白小一點，桌機大一點 */
+  .shell {
+    @apply mx-auto w-full max-w-shell px-6 sm:px-8 lg:px-12;
+  }
+
+  /* 極細分隔線 */
+  .hairline {
+    @apply border-ink/10;
+  }
+
+  /* Editorial 小標籤 */
+  .label-text {
+    @apply text-label uppercase tracking-label;
+  }
+
+  /* Section 垂直節奏 */
+  .section-space {
+    @apply py-24 sm:py-32 lg:py-40;
+  }
+}

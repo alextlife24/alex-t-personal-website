@@ -36,7 +36,8 @@ export default function WebsitePet() {
   const [hovered, setHovered] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
   const [bubbleAlign, setBubbleAlign] = useState<BubbleAlign>('center');
-  const [imageBroken, setImageBroken] = useState(false);
+  // 逐張記錄載入失敗的圖片，避免一張缺席就讓所有狀態都變成 Placeholder
+  const [brokenImages, setBrokenImages] = useState<Set<string>>(new Set());
   const [reduced, setReduced] = useState(false);
   const [isCoarse, setIsCoarse] = useState(false);
 
@@ -232,7 +233,7 @@ export default function WebsitePet() {
           aria-label="Alex T's cat"
         >
           <span className="pet-sprite" data-state={state} data-facing={facing}>
-            {imageBroken ? (
+            {brokenImages.has(src) ? (
               <span className="pet-placeholder" aria-hidden>
                 cat
               </span>
@@ -245,7 +246,9 @@ export default function WebsitePet() {
                 // 貓咪是 fixed 定位、永遠在視窗內，lazy 沒有意義，
                 // 而且會讓圖片缺席時的 onError 不會觸發（請求根本沒發出）
                 loading="eager"
-                onError={() => setImageBroken(true)}
+                onError={() =>
+                  setBrokenImages((current) => new Set(current).add(src))
+                }
               />
             )}
           </span>

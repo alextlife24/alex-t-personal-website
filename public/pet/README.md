@@ -1,50 +1,50 @@
 # Website Pet — 圖片放置說明
 
-## 目前需要的檔案
+## 需要的五個檔案
 
-把正式的**透明背景 PNG** 放在這裡：
+| 檔名 | 對應狀態 | 建議姿勢 |
+| --- | --- | --- |
+| `cat-idle.png` | 站著發呆 | 四腳站立、面向前方或右方 |
+| `cat-walk.png` | 走路 | 邁步中、面向右方 |
+| `cat-sit.png` | 坐著 | 坐姿 |
+| `cat-sleep.png` | 睡覺 | 蜷曲趴睡（橫式構圖沒問題） |
+| `cat-curious.png` | 好奇張望 | 抬頭往上看 |
 
-```
-public/pet/alex-cat.png
-```
+任何一張缺席時，**只有該狀態**會顯示虛線 Placeholder，其他狀態照常運作，
+網站不會壞版。所以可以先放幾張，之後再補齊。
 
-檔案還不存在時，元件會顯示一個簡單的 Placeholder 方塊，
-不會壞版、也不會出現錯誤。放進檔案後重新整理即可看到貓咪。
+## 規格
 
-### 建議規格
+| 項目 | 要求 | 原因 |
+| --- | --- | --- |
+| 格式 | PNG，**必須有透明通道** | 白底會在米色網頁上變成明顯的白方塊 |
+| 檔名 | 全小寫 | Vercel 的 Linux 環境區分大小寫 |
+| 方向 | **面向右邊** | 往左走時程式用 `transform: scaleX(-1)` 翻轉 |
+| 尺寸 | 短邊 320–600px | 實際顯示 48–80px，多的解析度給高解析螢幕 |
+| 檔案大小 | 每張建議 200KB 以內 | 每頁都會載入 |
+| 裁切 | 貼齊輪廓，四周不留多餘透明邊 | 有留白會讓貓看起來浮在半空中 |
 
-| 項目 | 建議 |
-| --- | --- |
-| 格式 | PNG，透明背景 |
-| 尺寸 | 短邊至少 320px（顯示時最大約 80px，預留 Retina 用） |
-| 構圖 | 貓咪面向**右邊**、四腳著地、完整入鏡 |
-| 留白 | 四周不要留多餘透明邊，否則看起來會浮在半空中 |
-| 檔案大小 | 建議 200KB 以內 |
+橫式的睡覺圖不需要特別處理 —— 元件用 `object-fit: contain` 搭配底部對齊，
+蜷曲的貓會自然呈現「寬而低」的樣子，比例正確。
 
-面向右邊很重要：程式在往左走時會用 `transform: scaleX(-1)` 自動翻轉。
-如果原圖面向左邊，方向就會全部相反。
+## 檢查透明背景
 
-## 未來要升級成多張圖時
+存檔後不確定有沒有透明通道的話，跟 Claude 說一聲，
+可以直接讀取 PNG 標頭確認 color type，不需要自己判斷。
 
-之後如果想讓不同狀態使用不同圖片，把檔案放在同一個資料夾：
+## 要改對應關係時
 
-```
-public/pet/cat-idle.png       # 站著
-public/pet/cat-walk.png       # 走路
-public/pet/cat-sleep.png      # 睡覺
-public/pet/cat-sit.png        # 坐著
-public/pet/cat-curious.png    # 好奇張望
-```
-
-然後只要修改 `src/components/pet/petConfig.ts` 裡的 `petImages` 對照表：
+編輯 `src/components/pet/petConfig.ts` 的 `petImages`：
 
 ```ts
 export const petImages: Record<PetState, string> = {
   idle: '/pet/cat-idle.png',
   walking: '/pet/cat-walk.png',
+  sitting: '/pet/cat-sit.png',
   sleeping: '/pet/cat-sleep.png',
   curious: '/pet/cat-curious.png',
 };
 ```
 
-元件其他部分都不需要動。
+同一個檔案裡也可以調整各狀態出現的機率（`behaviourWeights`）
+與停留時間（`stateDuration`）。元件本身不需要改動。

@@ -5,29 +5,27 @@
  * 元件本身完全不用動。詳見 public/pet/README.md。
  */
 
-export type PetState = 'idle' | 'walking' | 'sleeping' | 'curious';
+export type PetState = 'idle' | 'walking' | 'sitting' | 'sleeping' | 'curious';
 
 /**
  * 各狀態使用的圖片。
- * 目前只有一張 alex-cat.png，所有狀態共用。
+ * 檔案放在 public/pet/，詳見該資料夾的 README。
  *
- * 未來有分解圖時改成：
- *   idle: '/pet/cat-idle.png',
- *   walking: '/pet/cat-walk.png',
- *   sleeping: '/pet/cat-sleep.png',
- *   curious: '/pet/cat-curious.png',
+ * 任何一張缺席時，該狀態會顯示 Placeholder，其他狀態不受影響。
  */
 export const petImages: Record<PetState, string> = {
-  idle: '/pet/alex-cat.png',
-  walking: '/pet/alex-cat.png',
-  sleeping: '/pet/alex-cat.png',
-  curious: '/pet/alex-cat.png',
+  idle: '/pet/cat-idle.png',
+  walking: '/pet/cat-walk.png',
+  sitting: '/pet/cat-sit.png',
+  sleeping: '/pet/cat-sleep.png',
+  curious: '/pet/cat-curious.png',
 };
 
 /** 下一個行為的機率權重 */
 export const behaviourWeights: { state: PetState; weight: number }[] = [
   { state: 'walking', weight: 45 },
-  { state: 'idle', weight: 30 },
+  { state: 'idle', weight: 18 },
+  { state: 'sitting', weight: 12 },
   { state: 'sleeping', weight: 15 },
   { state: 'curious', weight: 10 },
 ];
@@ -36,6 +34,7 @@ export const behaviourWeights: { state: PetState; weight: number }[] = [
 export const stateDuration: Record<PetState, [number, number]> = {
   idle: [3000, 8000],
   walking: [4000, 10000],
+  sitting: [4000, 9000],
   sleeping: [8000, 15000],
   curious: [2500, 4000],
 };

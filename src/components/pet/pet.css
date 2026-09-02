@@ -107,11 +107,13 @@
 }
 
 .pet-sprite[data-state='idle'],
+.pet-sprite[data-state='sitting'],
 .pet-sprite[data-state='curious'] {
   animation: pet-breathe 3s ease-in-out infinite;
 }
 
 .pet-sprite[data-state='idle'][data-facing='left'],
+.pet-sprite[data-state='sitting'][data-facing='left'],
 .pet-sprite[data-state='curious'][data-facing='left'] {
   animation-name: pet-breathe-flipped;
 }
@@ -119,6 +121,11 @@
 /* curious 稍微抬頭張望 */
 .pet-sprite[data-state='curious'] {
   animation-duration: 2.6s;
+}
+
+/* 坐著時呼吸更慢、更安靜 */
+.pet-sprite[data-state='sitting'] {
+  animation-duration: 3.4s;
 }
 
 /* ------------------------------------------------------------
@@ -345,6 +352,7 @@
   .pet-sprite,
   .pet-sprite[data-state='idle'],
   .pet-sprite[data-state='walking'],
+  .pet-sprite[data-state='sitting'],
   .pet-sprite[data-state='curious'],
   .pet-sprite[data-state='sleeping'] {
     animation: none !important;

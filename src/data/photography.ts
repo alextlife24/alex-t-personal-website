@@ -15,6 +15,7 @@ export const photography: PhotographyContent = {
   photos: [
     {
       id: '01',
+      fallbackRatio: 'portrait',
       image: null, // → '/images/photo-01.jpg'（大型直圖）
       alt: '花蓮街道的直式照片',
       place: 'Hualien',
@@ -22,6 +23,7 @@ export const photography: PhotographyContent = {
     },
     {
       id: '02',
+      fallbackRatio: 'square',
       image: null, // → '/images/photo-02.jpg'（小圖）
       alt: '巷弄裡的角落',
       place: 'Hualien',
@@ -29,6 +31,7 @@ export const photography: PhotographyContent = {
     },
     {
       id: '03',
+      fallbackRatio: 'tall',
       image: null, // → '/images/photo-03.jpg'（小圖）
       alt: '海邊的午後',
       place: 'Hualien',
@@ -36,6 +39,7 @@ export const photography: PhotographyContent = {
     },
     {
       id: '04',
+      fallbackRatio: 'landscape',
       image: null, // → '/images/photo-04.jpg'（橫式大圖）
       alt: '橫式風景照片',
       place: 'Hualien',

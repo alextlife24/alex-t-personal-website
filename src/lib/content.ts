@@ -192,6 +192,10 @@ export async function getPlacesContent(): Promise<PlacesContent> {
       meta: row.category || 'Journal',
       image: row.cover_image_url,
       imageAlt: row.subtitle || row.title,
+      width: row.cover_width,
+      height: row.cover_height,
+      focalX: Number(row.cover_focal_x ?? 0.5),
+      focalY: Number(row.cover_focal_y ?? 0.5),
       comingSoon: true,
     })),
   };
@@ -210,10 +214,10 @@ export async function getPhotographyContent(): Promise<PhotographyContent> {
     .eq('published', true)
     .order('sort_order', { ascending: true })
     .order('created_at', { ascending: false })
-    .limit(4);
+    .limit(12);
 
-  // 版面需要固定四張，不足時仍用原本的 placeholder 排版
-  if (error || !data || data.length < 4) return photographyFallback;
+  // masonry 可以容納任意張數，只要有一張就使用資料庫內容
+  if (error || !data?.length) return photographyFallback;
 
   return {
     ...photographyFallback,
@@ -224,6 +228,10 @@ export async function getPhotographyContent(): Promise<PhotographyContent> {
       alt: row.title || row.caption || 'Photograph',
       place: row.location || 'Hualien',
       year: yearOf(row.taken_on),
+      width: row.width,
+      height: row.height,
+      focalX: Number(row.focal_x ?? 0.5),
+      focalY: Number(row.focal_y ?? 0.5),
     })),
   };
 }

@@ -25,6 +25,7 @@ export const adminNav: AdminNavGroup[] = [
   {
     title: 'Content',
     items: [
+      { label: 'Journal', href: '/admin/journal' },
       { label: 'Coffee', href: '/admin/coffee' },
       { label: 'Places', href: '/admin/places' },
       { label: 'Photography', href: '/admin/photography' },

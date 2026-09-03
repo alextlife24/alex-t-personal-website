@@ -4,7 +4,7 @@ import { ImageIcon, Trash2, Upload } from 'lucide-react';
 import { useRef, useState } from 'react';
 import { useToast } from '@/components/admin/Toast';
 import { getBrowserClient } from '@/lib/supabase/client';
-import { uploadImage } from '@/lib/admin/media';
+import { uploadOne } from '@/lib/admin/upload';
 import { ACCEPTED_IMAGE_EXTENSIONS } from '@/lib/supabase/config';
 import { cn } from '@/lib/utils';
 
@@ -12,6 +12,8 @@ type ImageFieldProps = {
   label: string;
   value: string | null;
   onChange: (url: string | null) => void;
+  /** 上傳成功時額外回報原始尺寸，呼叫端可一併存進資料庫 */
+  onMeta?: (meta: { width: number | null; height: number | null }) => void;
   hint?: string;
   className?: string;
 };
@@ -24,6 +26,7 @@ export default function ImageField({
   label,
   value,
   onChange,
+  onMeta,
   hint,
   className,
 }: ImageFieldProps) {
@@ -40,7 +43,7 @@ export default function ImageField({
     }
 
     setBusy(true);
-    const result = await uploadImage(supabase, file);
+    const result = await uploadOne(supabase, file, () => {});
     setBusy(false);
 
     if (!result.ok) {
@@ -48,6 +51,7 @@ export default function ImageField({
       return;
     }
     onChange(result.media.public_url);
+    onMeta?.({ width: result.media.width, height: result.media.height });
     toast('Image uploaded.');
   };
 

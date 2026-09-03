@@ -6,6 +6,7 @@ import PhotographySection from '@/components/sections/PhotographySection';
 import TechSection from '@/components/sections/TechSection';
 import ProjectsSection from '@/components/sections/ProjectsSection';
 import ContactSection from '@/components/sections/ContactSection';
+import JournalSection from '@/components/sections/JournalSection';
 import {
   getAboutContent,
   getCoffeeContent,
@@ -16,6 +17,7 @@ import {
   getSocialContent,
   getTechContent,
 } from '@/lib/content';
+import { getLatestStories } from '@/lib/journal';
 
 /**
  * 首頁只負責取得內容並組裝區塊順序。
@@ -26,7 +28,7 @@ import {
 export const revalidate = 60;
 
 export default async function HomePage() {
-  const [hero, about, coffee, places, photography, tech, projects, social] =
+  const [hero, about, coffee, places, photography, tech, projects, social, stories] =
     await Promise.all([
       getHeroContent(),
       getAboutContent(),
@@ -36,12 +38,14 @@ export default async function HomePage() {
       getTechContent(),
       getProjectsContent(),
       getSocialContent(),
+      getLatestStories(4),
     ]);
 
   return (
     <>
       <Hero hero={hero} />
       <AboutSection about={about} />
+      <JournalSection posts={stories} />
       <CoffeeSection coffee={coffee} />
       <PlacesSection places={places} />
       <PhotographySection photography={photography} />

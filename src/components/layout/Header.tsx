@@ -1,6 +1,7 @@
 'use client';
 
 import { Menu } from 'lucide-react';
+import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import MobileMenu from '@/components/layout/MobileMenu';
 import { contactAnchor, navItems } from '@/data/navigation';
@@ -30,18 +31,18 @@ export default function Header() {
         )}
       >
         <div className="shell flex h-20 items-center justify-between gap-6">
-          <a
-            href="#top"
+          <Link
+            href="/"
             className="font-serif text-xl tracking-tight text-ink transition-colors duration-300 hover:text-coffee sm:text-[1.375rem]"
           >
             {site.name}
-          </a>
+          </Link>
 
           <nav aria-label="主要導覽" className="hidden lg:block">
             <ul className="flex items-center gap-8">
               {navItems.map((item) => (
                 <li key={item.href}>
-                  <a
+                  <Link
                     href={item.href}
                     className="group relative inline-block py-1 font-sans text-[0.8125rem] tracking-wide text-ink/70 transition-colors duration-400 hover:text-ink"
                   >
@@ -50,14 +51,14 @@ export default function Header() {
                       aria-hidden
                       className="absolute bottom-0 left-0 h-px w-0 bg-coffee transition-[width] duration-400 ease-editorial group-hover:w-full"
                     />
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
           </nav>
 
           <div className="flex items-center gap-3">
-            <a
+            <Link
               href={contactAnchor.href}
               className="group hidden items-center gap-1.5 border border-ink/15 px-4 py-2 font-sans text-[0.8125rem] tracking-wide text-ink transition-colors duration-400 ease-editorial hover:border-coffee hover:text-coffee lg:inline-flex"
             >
@@ -68,7 +69,7 @@ export default function Header() {
               >
                 ↗
               </span>
-            </a>
+            </Link>
 
             <button
               type="button"

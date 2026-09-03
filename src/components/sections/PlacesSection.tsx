@@ -1,15 +1,18 @@
-import Figure from '@/components/ui/Figure';
 import Reveal from '@/components/ui/Reveal';
 import SectionLabel from '@/components/ui/SectionLabel';
+import SmartImage from '@/components/ui/SmartImage';
 import type { PlacesContent } from '@/lib/types/content';
 import { cn } from '@/lib/utils';
 
 /**
- * 03 / PLACES。
- * 四個 Journal Card，用交錯的上下位移做出雜誌感，不對稱。
- * 目前只做視覺卡片，Hover 顯示 View Story，但標示 Coming Soon。
+ * 03 / PLACES
+ *
+ * 視覺節奏：大型 cinematic 照片配上大字故事標題。
+ * 第一則佔滿寬度、後續交替左右，刻意不做等大卡片牆。
  */
 export default function PlacesSection({ places }: { places: PlacesContent }) {
+  const [lead, ...rest] = places.items;
+
   return (
     <section id="places" className="section-space">
       <div className="shell">
@@ -37,42 +40,90 @@ export default function PlacesSection({ places }: { places: PlacesContent }) {
             </div>
           </div>
         </div>
+      </div>
 
-        <ul className="mt-16 grid grid-cols-1 gap-x-10 gap-y-14 sm:grid-cols-2 lg:mt-24 lg:gap-x-16 lg:gap-y-20">
-          {places.items.map((item, index) => (
-            <Reveal
-              as="li"
-              key={item.id}
-              delay={0.04 * index}
-              className={cn('group', index % 2 === 1 && 'sm:mt-16 lg:mt-24')}
-            >
-              <div className="relative">
-                <Figure
-                  src={item.image}
-                  alt={item.imageAlt}
-                  ratio={index % 2 === 0 ? 'aspect-[4/5]' : 'aspect-[3/4]'}
-                  sizes="(max-width: 640px) 100vw, 46vw"
-                />
-                <div className="pointer-events-none absolute inset-x-0 bottom-0 flex items-center justify-between gap-3 bg-gradient-to-t from-ink/45 to-transparent p-5 opacity-0 transition-opacity duration-600 ease-editorial group-hover:opacity-100">
-                  <span className="label-text text-paper/90">View Story &#8599;</span>
+      {/* 首則：滿版 cinematic */}
+      {lead && (
+        <Reveal delay={0.05} y={24} duration={0.9}>
+          <figure className="group mt-16 lg:mt-24">
+            <div className="shell">
+              <SmartImage
+                image={{
+                  url: lead.image,
+                  alt: lead.imageAlt,
+                  width: lead.width,
+                  height: lead.height,
+                  focalX: lead.focalX,
+                  focalY: lead.focalY,
+                }}
+                ratio="panorama"
+                sizes="100vw"
+                zoomOnHover
+              >
+                <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink/55 via-ink/10 to-transparent p-6 sm:p-10">
+                  <span className="label-text text-paper/70">{lead.meta}</span>
+                  <p className="mt-3 max-w-2xl font-serif text-2xl leading-tight text-paper sm:text-4xl">
+                    {lead.title}
+                  </p>
+                </div>
+              </SmartImage>
+            </div>
+          </figure>
+        </Reveal>
+      )}
+
+      {/* 其餘：左右交替的大版位 */}
+      <div className="shell mt-16 space-y-16 lg:mt-24 lg:space-y-24">
+        {rest.map((item, index) => {
+          const flipped = index % 2 === 1;
+          return (
+            <Reveal key={item.id} delay={0.04} y={20}>
+              <article
+                className={cn(
+                  'group grid grid-cols-1 gap-6 md:grid-cols-12 md:items-center md:gap-10',
+                )}
+              >
+                <div
+                  className={cn(
+                    'md:col-span-7',
+                    flipped && 'md:order-2 md:col-start-6',
+                  )}
+                >
+                  <SmartImage
+                    image={{
+                      url: item.image,
+                      alt: item.imageAlt,
+                      width: item.width,
+                      height: item.height,
+                      focalX: item.focalX,
+                      focalY: item.focalY,
+                    }}
+                    ratio={index % 3 === 0 ? 'landscape' : 'tall'}
+                    sizes="(max-width: 768px) 100vw, 58vw"
+                    zoomOnHover
+                  />
+                </div>
+
+                <div
+                  className={cn('md:col-span-4', flipped ? 'md:order-1' : 'md:col-start-9')}
+                >
+                  <div className="flex items-baseline gap-4">
+                    <span className="label-text text-coffee">{item.id}</span>
+                    <span className="label-text text-ink/40">{item.meta}</span>
+                  </div>
+                  <h3 className="mt-4 font-serif text-2xl leading-snug text-ink transition-colors duration-400 ease-editorial group-hover:text-coffee sm:text-3xl">
+                    {item.title}
+                  </h3>
                   {item.comingSoon && (
-                    <span className="border border-paper/40 px-2 py-1 text-[0.625rem] uppercase tracking-label text-paper/80">
+                    <span className="mt-5 inline-block border border-ink/15 px-2.5 py-1 text-[0.625rem] uppercase tracking-label text-ink/40">
                       Coming Soon
                     </span>
                   )}
                 </div>
-              </div>
-
-              <div className="mt-6 flex items-baseline gap-4">
-                <span className="label-text text-coffee">{item.id}</span>
-                <span className="label-text text-ink/40">{item.meta}</span>
-              </div>
-              <h3 className="mt-3 font-serif text-2xl leading-snug text-ink transition-colors duration-400 ease-editorial group-hover:text-coffee sm:text-[1.75rem]">
-                {item.title}
-              </h3>
+              </article>
             </Reveal>
-          ))}
-        </ul>
+          );
+        })}
       </div>
     </section>
   );

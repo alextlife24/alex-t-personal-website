@@ -47,7 +47,7 @@ export type AboutContent = {
   interests: string[];
 };
 
-export type CoffeeCard = {
+export type CoffeeCard = ImageMeta & {
   id: string;
   kicker: string;
   title: string;
@@ -65,7 +65,15 @@ export type CoffeeContent = {
   cards: CoffeeCard[];
 };
 
-export type PlaceItem = {
+/** 通用圖片欄位：讓版面可以用真實比例排版，不必預先裁切 */
+export type ImageMeta = {
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
+};
+
+export type PlaceItem = ImageMeta & {
   id: string;
   title: string;
   meta: string;
@@ -82,12 +90,14 @@ export type PlacesContent = {
   items: PlaceItem[];
 };
 
-export type Photo = {
+export type Photo = ImageMeta & {
   id: string;
   image: string | null;
   alt: string;
   place: string;
   year: string;
+  /** 沒有尺寸資料時 masonry 用的備援比例 */
+  fallbackRatio?: 'landscape' | 'portrait' | 'square' | 'tall';
 };
 
 export type PhotographyContent = {

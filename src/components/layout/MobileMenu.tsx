@@ -2,6 +2,7 @@
 
 import { AnimatePresence, motion } from 'framer-motion';
 import { X } from 'lucide-react';
+import Link from 'next/link';
 import { useEffect } from 'react';
 import { contactAnchor, navItems } from '@/data/navigation';
 import { site } from '@/data/site';
@@ -69,7 +70,7 @@ export default function MobileMenu({ open, onClose }: MobileMenuProps) {
                   }}
                   className="border-b border-ink/10"
                 >
-                  <a
+                  <Link
                     href={item.href}
                     onClick={onClose}
                     className="flex items-baseline gap-4 py-4"
@@ -78,19 +79,19 @@ export default function MobileMenu({ open, onClose }: MobileMenuProps) {
                       {String(index + 1).padStart(2, '0')}
                     </span>
                     <span className="font-serif text-3xl text-ink">{item.label}</span>
-                  </a>
+                  </Link>
                 </motion.li>
               ))}
             </ul>
 
-            <a
+            <Link
               href={contactAnchor.href}
               onClick={onClose}
               className="mt-10 inline-flex items-center gap-2 self-start border-b border-coffee/40 pb-1 font-sans text-sm tracking-wide text-coffee"
             >
               {contactAnchor.label}
               <span aria-hidden>↗</span>
-            </a>
+            </Link>
           </nav>
         </motion.div>
       )}

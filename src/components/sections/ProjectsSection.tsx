@@ -1,16 +1,16 @@
 import Reveal from '@/components/ui/Reveal';
 import SectionLabel from '@/components/ui/SectionLabel';
 import type { ProjectsContent } from '@/lib/types/content';
+import { cn } from '@/lib/utils';
 
 /**
- * 06 / SELECTED PROJECTS。
- * 極簡 Row List：編號、標題、分類、年份、箭頭。Hover 時整列淡淡變色。
+ * 06 / SELECTED PROJECTS
+ *
+ * 視覺節奏：大型交替列。
+ * 每一列是一個高大的橫幅，編號與年份左右分置，
+ * 標題字級刻意放大，與 AI & Tech 的密集清單形成對比。
  */
-export default function ProjectsSection({
-  projects,
-}: {
-  projects: ProjectsContent;
-}) {
+export default function ProjectsSection({ projects }: { projects: ProjectsContent }) {
   return (
     <section id="projects" className="section-space bg-sand">
       <div className="shell">
@@ -25,46 +25,78 @@ export default function ProjectsSection({
         </Reveal>
 
         <ul className="mt-14 border-t border-ink/15 lg:mt-20">
-          {projects.items.map((project, index) => (
-            <Reveal
-              as="li"
-              key={project.id}
-              delay={0.03 * index}
-              y={10}
-              duration={0.5}
-              className="border-b border-ink/10"
-            >
-              <div className="group -mx-4 flex items-center gap-4 px-4 py-6 transition-colors duration-400 ease-editorial hover:bg-paper sm:gap-8 sm:py-7">
-                <span className="label-text w-6 shrink-0 text-coffee/70">
-                  {project.id}
-                </span>
-
-                <div className="min-w-0 flex-1">
-                  <h3 className="font-serif text-xl leading-snug text-ink transition-colors duration-400 group-hover:text-coffee sm:text-2xl">
-                    {project.title}
-                  </h3>
-                  <p className="mt-1 font-sans text-xs text-ink/45 sm:hidden">
-                    {project.category} &middot; {project.year}
-                  </p>
+          {projects.items.map((project, index) => {
+            const alignRight = index % 2 === 1;
+            const row = (
+              <div
+                className={cn(
+                  'group flex flex-col gap-2 py-8 transition-colors duration-400 ease-editorial sm:py-10 lg:py-12',
+                  alignRight && 'sm:items-end sm:text-right',
+                )}
+              >
+                <div
+                  className={cn(
+                    'flex items-center gap-4',
+                    alignRight && 'sm:flex-row-reverse',
+                  )}
+                >
+                  <span className="label-text text-coffee/70">{project.id}</span>
+                  <span aria-hidden className="h-px w-8 bg-ink/20" />
+                  <span className="label-text text-ink/40">{project.category}</span>
                 </div>
 
-                <span className="hidden w-48 shrink-0 font-sans text-sm text-ink/50 sm:block">
-                  {project.category}
-                </span>
+                <h3 className="font-serif text-[1.75rem] leading-tight text-ink transition-colors duration-400 group-hover:text-coffee sm:text-4xl lg:text-5xl">
+                  {project.title}
+                </h3>
 
-                <span className="hidden w-16 shrink-0 font-sans text-sm text-ink/40 sm:block">
-                  {project.year}
-                </span>
-
-                <span
-                  aria-hidden
-                  className="shrink-0 text-ink/30 transition-all duration-400 ease-editorial group-hover:translate-x-1 group-hover:text-coffee"
+                <div
+                  className={cn(
+                    'mt-1 flex items-center gap-3',
+                    alignRight && 'sm:flex-row-reverse',
+                  )}
                 >
-                  &#8594;
-                </span>
+                  <span className="font-sans text-sm text-ink/40">{project.year}</span>
+                  {project.href && (
+                    <span
+                      aria-hidden
+                      className={cn(
+                        'text-ink/30 transition-transform duration-400 ease-editorial group-hover:text-coffee',
+                        alignRight
+                          ? 'group-hover:-translate-x-1'
+                          : 'group-hover:translate-x-1',
+                      )}
+                    >
+                      {alignRight ? '←' : '→'}
+                    </span>
+                  )}
+                </div>
               </div>
-            </Reveal>
-          ))}
+            );
+
+            return (
+              <Reveal
+                as="li"
+                key={project.id}
+                delay={0.04 * index}
+                y={14}
+                duration={0.6}
+                className="border-b border-ink/10"
+              >
+                {project.href ? (
+                  <a
+                    href={project.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block"
+                  >
+                    {row}
+                  </a>
+                ) : (
+                  row
+                )}
+              </Reveal>
+            );
+          })}
         </ul>
       </div>
     </section>

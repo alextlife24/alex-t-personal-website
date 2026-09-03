@@ -15,7 +15,7 @@ import {
 } from '@/components/admin/Fields';
 import { useToast } from '@/components/admin/Toast';
 import { useCollection } from '@/lib/admin/useCollection';
-import { uploadImage } from '@/lib/admin/media';
+import { uploadOne } from '@/lib/admin/upload';
 import { getBrowserClient } from '@/lib/supabase/client';
 import { ACCEPTED_IMAGE_EXTENSIONS } from '@/lib/supabase/config';
 import type { PhotoRow } from '@/lib/types/database';
@@ -65,15 +65,20 @@ export default function AdminPhotographyPage() {
     let added = 0;
 
     for (const file of Array.from(files)) {
-      const result = await uploadImage(supabase, file);
+      const result = await uploadOne(supabase, file, () => {});
       if (!result.ok) {
-        toast(result.error, 'error');
+        toast(`${file.name}：${result.error}`, 'error');
         continue;
       }
       await create({
         image_url: result.media.public_url,
         title: file.name.replace(/\.[^.]+$/, ''),
         category: 'Hualien',
+        // 記錄原始尺寸，前台 masonry 才能保留照片比例
+        width: result.media.width,
+        height: result.media.height,
+        focal_x: 0.5,
+        focal_y: 0.5,
         published: true,
         sort_order: rows.length + added,
       });

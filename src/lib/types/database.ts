@@ -89,6 +89,10 @@ export type PlaceRow = Timestamps & {
   story: string | null;
   visit_date: string | null;
   cover_image_url: string | null;
+  cover_width: number | null;
+  cover_height: number | null;
+  cover_focal_x: number;
+  cover_focal_y: number;
   gallery: string[];
   published: boolean;
   featured: boolean;
@@ -98,6 +102,10 @@ export type PlaceRow = Timestamps & {
 export type PhotoRow = Timestamps & {
   title: string | null;
   image_url: string;
+  width: number | null;
+  height: number | null;
+  focal_x: number;
+  focal_y: number;
   location: string | null;
   camera: string | null;
   lens: string | null;
@@ -152,6 +160,93 @@ export type MediaRow = Timestamps & {
   public_url: string;
   mime_type: string | null;
   size_bytes: number | null;
+  /** 通用圖片系統：原始尺寸與焦點 */
+  width: number | null;
+  height: number | null;
+  aspect_ratio: number | null;
+  alt: string | null;
+  caption: string | null;
+  focal_x: number;
+  focal_y: number;
+  sort_order: number;
+};
+
+// ------------------------------------------------------------
+// 第二階段：Journal / Block Editor / Gallery
+// ------------------------------------------------------------
+
+export type JournalCategory =
+  | 'Coffee'
+  | 'Hualien'
+  | 'Photography'
+  | 'Travel'
+  | 'Technology'
+  | 'Life';
+
+export type PostStatus = 'draft' | 'published';
+
+export type BlockType =
+  | 'paragraph'
+  | 'heading'
+  | 'image'
+  | 'gallery'
+  | 'quote'
+  | 'divider'
+  | 'spacer'
+  | 'location'
+  | 'coffee-note';
+
+export type GalleryStyle =
+  | 'editorial'
+  | 'masonry'
+  | 'grid'
+  | 'carousel'
+  | 'filmstrip';
+
+export type JournalPostRow = Timestamps & {
+  title: string;
+  slug: string;
+  excerpt: string | null;
+  cover_image_url: string | null;
+  cover_width: number | null;
+  cover_height: number | null;
+  cover_focal_x: number;
+  cover_focal_y: number;
+  cover_alt: string | null;
+  category: JournalCategory;
+  tags: string[];
+  published_at: string | null;
+  status: PostStatus;
+  featured: boolean;
+  sort_order: number;
+};
+
+export type ContentBlockRow = Timestamps & {
+  post_id: string;
+  type: BlockType;
+  content: Record<string, unknown>;
+  settings: Record<string, unknown>;
+  sort_order: number;
+};
+
+export type GalleryRow = Timestamps & {
+  post_id: string | null;
+  title: string | null;
+  style: GalleryStyle;
+};
+
+export type GalleryImageRow = Timestamps & {
+  gallery_id: string;
+  media_id: string | null;
+  image_url: string;
+  alt: string | null;
+  caption: string | null;
+  width: number | null;
+  height: number | null;
+  focal_x: number;
+  focal_y: number;
+  is_cover: boolean;
+  sort_order: number;
 };
 
 type TableShape<Row> = {
@@ -174,6 +269,10 @@ export type Database = {
       projects: TableShape<ProjectRow>;
       social_links: TableShape<SocialLinkRow>;
       media: TableShape<MediaRow>;
+      journal_posts: TableShape<JournalPostRow>;
+      content_blocks: TableShape<ContentBlockRow>;
+      galleries: TableShape<GalleryRow>;
+      gallery_images: TableShape<GalleryImageRow>;
     };
     Views: Record<never, never>;
     Functions: Record<never, never>;
@@ -188,4 +287,5 @@ export type ContentTable =
   | 'places'
   | 'photos'
   | 'technology_projects'
-  | 'projects';
+  | 'projects'
+  | 'journal_posts';

@@ -22,6 +22,8 @@ const CATEGORIES = ['Cafe', 'Food', 'Travel', 'Local', 'Photography', 'Hualien']
 
 type Form = {
   title: string;
+  cover_width: number | null;
+  cover_height: number | null;
   subtitle: string;
   category: string;
   location: string;
@@ -37,6 +39,8 @@ type Form = {
 
 const emptyForm: Form = {
   title: '',
+  cover_width: null,
+  cover_height: null,
   subtitle: '',
   category: 'Local',
   location: '',
@@ -90,6 +94,8 @@ function PlacesPageInner() {
       story: row.story ?? '',
       visit_date: row.visit_date ?? '',
       cover_image_url: row.cover_image_url,
+      cover_width: row.cover_width,
+      cover_height: row.cover_height,
       gallery: row.gallery ?? [],
       published: row.published,
       featured: row.featured,
@@ -108,6 +114,8 @@ function PlacesPageInner() {
       story: nullable(form.story),
       visit_date: nullable(form.visit_date),
       cover_image_url: form.cover_image_url,
+      cover_width: form.cover_width,
+      cover_height: form.cover_height,
       gallery: form.gallery,
       published: form.published,
       featured: form.featured,
@@ -251,8 +259,13 @@ function PlacesPageInner() {
 
           <ImageField
             label="Cover Image"
+            hint="橫式、直式、方形都可以，版面會自動處理"
             value={form.cover_image_url}
             onChange={(url) => set('cover_image_url', url)}
+            onMeta={({ width, height }) => {
+              set('cover_width', width);
+              set('cover_height', height);
+            }}
           />
 
           <Field label="Gallery" hint="貼上圖片網址後按 Enter，可從 Media Library 複製">
